@@ -13,16 +13,22 @@ export default function Navbar() {
     // }
 
     <nav className="flex justify-between items-center p-4 bg-blue-600 text-white">
-      <h1 className="text-xl font-bold">Smith Family Supermarket</h1>
+      <h1 className="text-xl font-bold font-serif">Smith Family Market</h1>
+      <p className="text-sm italic text-orange-300">
+        Groceries with Heart, For Every Home
+      </p>
       <div className="space-x-4">
-        <Link to="/" className="hover:underline">
+        <Link to="/" className="hover:text-orange-400 font-semibold underline">
           Login
         </Link>
-        <Link to="/register" className="hover:underline">
+        <Link to="/register" className="hover:text-orange-400 font-semibold underline">
           Register
         </Link>
-        <Link to="/dashboard" className="hover:underline">
+        <Link to="/dashboard" className="hover:text-orange-400 font-semibold underline">
           Dashboard
+        </Link>
+        <Link to="/inventory" className="hover:text-orange-400 font-semibold underline">
+          Inventory
         </Link>
       </div>
     </nav>
