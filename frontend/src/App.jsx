@@ -3,6 +3,7 @@ import NavBar from "./components/Navbar.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import Inventory from "./pages/Inventory.jsx"
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/inventory" element={<Inventory />} />
       </Routes>
     </>
   );
