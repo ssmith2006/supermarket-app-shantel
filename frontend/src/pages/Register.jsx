@@ -40,7 +40,7 @@ export default function Register() {
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
       />{" "}
-      <button className="w-full bg-green-500 text-white py-2 rounded">
+      <button className="w-full bg-orange-500 text-white py-2 rounded hover:bg-green-500">
         Register
       </button>{" "}
       {message && <p className="mt-3 text-red-500">{message}</p>}{" "}
