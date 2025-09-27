@@ -14,9 +14,9 @@ export default function Login() {
     try {
       const res = await fetch("https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/auth/login", {
         method: "POST",
-        headers: { Authorization: "Basic " + btoa(`${username}: ${password}`) },
+        headers: { Authorization: "Basic " + btoa(`${username}:${password}`) },
       });
-      const data = await res.json();
+      const data = await res.json().catch(()=>({}));
       if (res.ok) {
         console.log(data)
         localStorage.setItem("token", data.token);
@@ -77,6 +77,7 @@ export default function Login() {
           className="w-full border rounded p-2 mb-6"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
         />
         <input
           type="password"
@@ -84,6 +85,7 @@ export default function Login() {
           className="w-full border rounded p-2 mb-6"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
         />
         <button
           type="submit"
@@ -92,7 +94,8 @@ export default function Login() {
           Login
         </button>{" "}
         <button
-          type="submit"
+          type="button"
+          onClick={()=> navigate("/register")}
           className="w-7/12 bg-blue-500 text-white py-2 rounded hover:bg-orange-300"
         >
           Register
