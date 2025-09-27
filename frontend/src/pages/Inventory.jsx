@@ -17,21 +17,27 @@ function Inventory() {
 
   const fetchInventory = async () => {
     if (!token) return;
-    const res = await fetch("http://localhost:3000/inventory", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     // console.log(data)
     setProducts(data);
   };
 const fetchTopProducts = async ()=>{
-  const res = await fetch ("http://localhost:3000/inventory/top/units",{
-    headers: {
-      Authorization: `Bearer ${token}`
+  const res = await fetch(
+    "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory/top/units",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  })
+  );
   const data = await res.json();
   setTopProducts(data)
 }
