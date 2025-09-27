@@ -15,15 +15,18 @@ function AddProductsForm() {
       setMessage("You must be logged in to add a new product.");
       return;
     }
-    const res = await fetch("http://localhost:3000/inventory", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+    const res = await fetch(
+      "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
 
-      body: JSON.stringify({ name, price, stock }),
-    });
+        body: JSON.stringify({ name, price, stock }),
+      }
+    );
 
     const data = await res.json();
     if (res.ok) {
@@ -84,13 +87,13 @@ function AddProductsForm() {
 
       <button
         type="submit"
-        className="bg-pink-500 text-white px-4 py-2  mt-4 rounded hover:bg-pink-700"
+        className="bg-orange-500 text-white px-4 py-2  mt-4 rounded hover:bg-green-700"
       >
         Add Product
       </button>
 
       {message && (
-        <p className="text-pink-500 text-semibold ml-4 mr-4 mt-9">{message}</p>
+        <p className="text-red-600 text-semibold ml-4 mr-4 mt-9">{message}</p>
       )}
     </form>
     </div>
