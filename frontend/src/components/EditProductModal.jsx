@@ -2,9 +2,10 @@ import { useState} from "react"
 
 function EditProductModal({product, onClose, onUpdated}){
 
-const [name, setName] = useState ("")
-const [stock, setStock] = useState ("")
-const [price, setPrice] = useState ("")
+const [name, setName] = useState ("");
+const [stock, setStock] = useState (0);
+const [price, setPrice] = useState (0);
+const [message, setMessage] = useState ("") 
 const handleSubmit = async (e) => {
   e.preventDefault();
   const token = localStorage.getItem("token");
