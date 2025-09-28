@@ -55,8 +55,7 @@ export default function InventoryTable({ products, refresh }) {
                   <button className="bg-orange-500 text-white font-semibold px-2 py-1 rounded flex-shrink-0">
                     EDIT
                   </button>
-                  <button className="bg-green-500 text-white font-semibold px-2 py-1 rounded flex-shrink-0">
-                    UPLOAD
+                  <UploadPicture id={p.product_id} refresh = {refresh}/>
                   </button>
                 </div>
               </td>
