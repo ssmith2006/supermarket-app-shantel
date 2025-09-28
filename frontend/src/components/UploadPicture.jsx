@@ -1,6 +1,6 @@
 import { useRef} from "react"
 
-function UploadPicture(){
+function UploadPicture({id, refresh}){
   const fileInputRef =useRef(null);
   const handleFileChange = async(e) =>{
     const file = e.target.files[0];
@@ -11,10 +11,19 @@ function UploadPicture(){
     }
       const formData = new FormData()
       formData.append("image"/file);
-      await fetch (`http://`, { //add codespace url
+      const res = await fetch (`http://`, { //add codespace url
         method: "POST",
-        body: formData
-      })
+        body: formData,  
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+    if(res.ok) {
+      alert("Image uploaded successfully!")
+    }else{
+      alert("An error has occurred.  Please try again!")
+    }
       refresh()  
   }
   return (
