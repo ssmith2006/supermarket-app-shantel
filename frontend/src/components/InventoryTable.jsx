@@ -30,6 +30,7 @@ export default function InventoryTable({ products, refresh }) {
       <table className="mt-5 mb-5">
         <thead className="bg-gray-500 ">
           <tr>
+            <th className="border px-4 py-2 text-white font-semibold">Picture</th>
             <th className="border px-4 py-2 text-white font-semibold">Name</th>
             <th className="border px-4 py-2 text-white font-semibold">Price</th>
             <th className="border px-4 py-2 text-white font-semibold">Stock</th>
@@ -41,6 +42,11 @@ export default function InventoryTable({ products, refresh }) {
         <tbody>
           {products.map((p) => (
             <tr key={p.product_id}>
+              <td className="border px-4 py-2">{p.inventory_picture_url ? (
+              <img src={p.inventory_picture_url} alt={p.name} className="w-[10rem] h-[10rem] object-cover rounded"/>
+              ) : (<span className="italic text-gray-400">No Image</span>)
+              }
+              </td>
               <td className="border px-4 py-2">{p.name}</td>
               <td className="border px-4 py-2">${p.price}</td>
               <td className="border px-4 py-2">{p.stock}</td>
