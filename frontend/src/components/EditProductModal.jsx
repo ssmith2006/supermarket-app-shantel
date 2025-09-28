@@ -25,6 +25,9 @@ if(!token){
     setMessage("Product updated successfully!")
     onUpdated();
     onClose();
+  }else{
+    setMessage(data:
+               message || "Error updating product"),
     
   
 }
@@ -49,6 +52,9 @@ return (
 <div className="flex justify-end space-x-2 pt-8">
 <button type="button" className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" onClick={onClose}>Cancel</button>
   </div>
+  {message && (
+        <p className="text-red-600 text-semibold ml-4 mr-4 mt-9">{message}</p>
+      )}
   </form>
   </div>
   </div>
