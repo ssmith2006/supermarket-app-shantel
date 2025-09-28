@@ -1,7 +1,11 @@
 import React from "react";
+import { use, useState } from "react";
+import {EditProductModal} from "./EditProductModal.jsx"
 
-export default function InventoryTable({ products }) {
+export default function InventoryTable({ products, refresh }) {
+  
   const token = localStorage.getItem("token");
+  const [editing, setEditing] = useState(null);
 
   // TEMP: don't block rendering while building
   if (!token) {
@@ -14,10 +18,11 @@ export default function InventoryTable({ products }) {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
-        },
+        }
       }
-    );
-    refresh() || alert("Item deleted successfully");
+    )
+    alert("Item deleted successfully");
+    refresh()
   };
 
   return (
@@ -59,6 +64,9 @@ export default function InventoryTable({ products }) {
           ))}
         </tbody>
       </table>
+      {editing && (
+      <EditProductModal product={editing} onClose={() => setEditing(null)} onUpdated={refresh}/>
+      )}
     </div>
   );
 }
