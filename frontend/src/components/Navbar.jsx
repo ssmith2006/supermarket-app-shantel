@@ -30,6 +30,12 @@ export default function Navbar() {
         <Link to="/inventory" className="hover:text-orange-400 font-semibold underline">
           Inventory
         </Link>
+         <Link to="/customer" className="hover:text-orange-400 font-semibold underline">
+          Customers
+        </Link> 
+        <Link to="/sales" className="hover:text-orange-400 font-semibold underline">
+          Sales
+        </Link>
       </div>
     </nav>
   );
