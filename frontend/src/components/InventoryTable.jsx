@@ -1,6 +1,7 @@
 import React from "react";
-import { use, useState } from "react";
-import {EditProductModal} from "./EditProductModal.jsx"
+import { useState } from "react";
+import EditProductModal from "/workspaces/supermarket-app-shantel/frontend/src/components/EditProductModal.jsx";
+import UploadPicture from "/workspaces/supermarket-app-shantel/frontend/src/components/UploadPicture.jsx"
 
 export default function InventoryTable({ products, refresh }) {
   
@@ -58,11 +59,11 @@ export default function InventoryTable({ products, refresh }) {
                   >
                     DELETE
                   </button>
-                  <button className="bg-orange-500 text-white font-semibold px-2 py-1 rounded flex-shrink-0">
+                  <button className="bg-orange-500 text-white font-semibold px-2 py-1 rounded flex-shrink-0" onClick={() => setEditing(p)}>
                     EDIT
                   </button>
-                  <UploadPicture id={p.product_id} refresh = {refresh}/>
-                  </button>
+                  <UploadPicture id={p.product_id} refresh={refresh}/>
+                  
                 </div>
               </td>
             </tr>
