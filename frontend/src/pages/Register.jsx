@@ -6,8 +6,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/auth/register",
+      const res = await fetch("https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/auth/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
