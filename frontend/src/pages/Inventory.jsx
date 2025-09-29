@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import AddProductsForm from "../components/AddProductsForm";
 import InventoryTable from "../components/InventoryTable";
 import TopProductsCard from "../components/TopProductsCard";
+import LowStockCard from "../components/LowStockCard";
 
 function Inventory() {
   const [products, setProducts] = useState([]);
-  const [topProducts, setTopProducts]  = useState([]);
+  const [topProducts, setTopProducts] = useState([]);
+  const [lowStock, setLowStock] = useState([])
   const token = localStorage.getItem("token");
 
   // TEMP: don't block rendering while building
-  if (!token){
-      return (
-        <p className="text-center mt-4"> Please log in to see inventory.</p>
-      );
+  if (!token) {
+    return <p className="text-center mt-4"> Please log in to see inventory.</p>;
   }
 
   const fetchInventory = async () => {
@@ -29,21 +29,34 @@ function Inventory() {
     // console.log(data)
     setProducts(data);
   };
-const fetchTopProducts = async ()=>{
-  const res = await fetch(
-    "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory/top/units",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const data = await res.json();
-  setTopProducts(data)
-}
+  const fetchTopProducts = async () => {
+    const res = await fetch(
+      "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory/top/units",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const data = await res.json();
+    setTopProducts(data);
+  };
+
+  const fetchLowStock =async () => {
+    const res = await fetch("https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory/low-stock/2",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
+    )
+    const data = await res.json()
+    setLowStock(data)
+  }
   useEffect(() => {
     fetchInventory();
     fetchTopProducts();
+    fetchLowStock();
   }, []);
 
   return (
@@ -58,8 +71,14 @@ const fetchTopProducts = async ()=>{
         </div>
         <AddProductsForm />
         <InventoryTable products={products} />
-        <TopProductsCard products={topProducts}/>
-      {/* <LowStockCard/> */}
+        <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex- min-w-[300px]">
+            <TopProductsCard products={topProducts} />
+          </div>
+        </div>
+        <div className="flex-1 min-w-[300px]">
+          <LowStockCard products={lowStock} threshold={5} />
+        </div>
       </div>
     </div>
   );
