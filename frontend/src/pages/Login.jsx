@@ -23,7 +23,7 @@ export default function Login() {
         localStorage.setItem("user", JSON.stringify(data.user))
         navigate("/dashboard");
       } else {
-        setMessage(data.message || "Login failed");
+        setMessage(data.message || "Login failed. Check username and password");
       }
     } catch (err) {
       setMessage("Network Error");
