@@ -5,7 +5,7 @@ export default function Sales() {
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
   const [sales, setSales] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -24,7 +24,7 @@ export default function Sales() {
   const fetchCustomers = async () => {
     if (!token) return;
     const res = await fetch(
-      "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/customer",
+      "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/customer/",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -32,6 +32,7 @@ export default function Sales() {
       }
     );
     const data = await res.json();
+    console.log("Fetched customers", data);
     setCustomers(data);
   };
 
@@ -78,9 +79,12 @@ export default function Sales() {
     const updated = selectedProducts.map((p) =>
       p.product_id === product_id ? { ...p, quantity, price: product.price } : p
     );
-    if (!selectedProducts.find((p) => p.product_id === productId)) {
+    if (existing) {
+      existing.quantity = quantity;
+      existing.price = product.price;
+    } else {
       updated.push({
-        product_id: productId,
+        product_id,
         name: product.name,
         quantity,
         price: product.price,
@@ -88,9 +92,9 @@ export default function Sales() {
     }
 
     setSelectedProducts(updated);
-    if (!selectedProducts.find((p) => p.product_id === productId)) {
+    if (!selectedProducts.find((p) => p.product_id === product_id)) {
       updated.push({
-        product_id: productId,
+        product_id: product_id,
         name: product.name,
         quantity,
         price: product.price,
@@ -120,7 +124,7 @@ export default function Sales() {
       }
     );
     const data = await res.json();
-    const saleId = data.sale_id;
+    const sale_id = data.sale_id;
 
     // 2. Add products to sale
     for (const p of selectedProducts) {
@@ -133,7 +137,7 @@ export default function Sales() {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            sale_id: saleId,
+            sale_id: sale_id,
             product_id: p.product_id,
             quantity: p.quantity,
             price: p.price,
