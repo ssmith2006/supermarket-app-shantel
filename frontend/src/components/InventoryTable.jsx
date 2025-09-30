@@ -3,7 +3,7 @@ import { useState } from "react";
 import EditProductModal from "/workspaces/supermarket-app-shantel/frontend/src/components/EditProductModal.jsx";
 import UploadPicture from "/workspaces/supermarket-app-shantel/frontend/src/components/UploadPicture.jsx"
 
-export default function InventoryTable({ products, refresh }) {
+export default function InventoryTable({ products, onChanged }) {
   
   const token = localStorage.getItem("token");
   const [editing, setEditing] = useState(null);
@@ -23,7 +23,7 @@ export default function InventoryTable({ products, refresh }) {
       }
     )
     alert("Item deleted successfully");
-    refresh()
+    if (onChanged) onChanged();
   };
 
   return (
@@ -59,10 +59,11 @@ export default function InventoryTable({ products, refresh }) {
                   >
                     DELETE
                   </button>
+
                   <button className="bg-orange-500 text-white font-semibold px-2 py-1 rounded flex-shrink-0" onClick={() => setEditing(p)}>
                     EDIT
                   </button>
-                  <UploadPicture id={p.product_id} refresh={refresh}/>
+                  <UploadPicture id={p.product_id} refresh={onChanged}/>
                   
                 </div>
               </td>
@@ -71,7 +72,7 @@ export default function InventoryTable({ products, refresh }) {
         </tbody>
       </table>
       {editing && (
-      <EditProductModal product={editing} onClose={() => setEditing(null)} onUpdated={refresh}/>
+      <EditProductModal product={editing} onClose={() => setEditing(null)} onUpdated={onChanged}/>
       )}
     </div>
   );
