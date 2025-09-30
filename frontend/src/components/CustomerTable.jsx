@@ -2,7 +2,7 @@ import React from "react"
 import { useState } from "react";
 import EditCustomerModal from "./EditCustomerModal.jsx";
 
-export default function CustomerTable({customer, refresh}){
+export default function CustomerTable({customer, onChanged}){
   const [editing, setEditing] = useState(null)
     const token = localStorage.getItem("token")
 
@@ -18,7 +18,7 @@ export default function CustomerTable({customer, refresh}){
         }
     )
     alert("Customer profile successfully deleted!")
-    refresh()
+   if (onChanged) onChanged()
     }
 
     return (
@@ -38,8 +38,8 @@ export default function CustomerTable({customer, refresh}){
         <tbody>
           {customer.map((c) => (
             <tr key={c.customer_id}>
-              <td className="border px-4 py-2">{c.customer_picture_url ? (
-              <img src={c.customer_picture_url} alt={c.name} className="w-[10rem] h-[10rem] object-cover rounded"/>
+              <td className="border px-4 py-2">{c.profile_picture_url ? (
+              <img src={c.profile_picture_url} alt={c.name} className="w-[10rem] h-[10rem] object-cover rounded"/>
               ) : (<span className="italic text-gray-400">No Image</span>)
               }
               </td>
@@ -66,7 +66,7 @@ export default function CustomerTable({customer, refresh}){
         </tbody>
       </table>
       {editing && (
-      <EditCustomerModal customer={editing} onClose={() => setEditing(null)} onUpdated={refresh}/>
+      <EditCustomerModal customer={editing} onClose={() => setEditing(null)} onUpdated={onChanged}/>
       )}
     </div>
   );
