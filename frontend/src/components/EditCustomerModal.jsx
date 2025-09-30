@@ -17,7 +17,7 @@ function EditCustomerModal({ customer, onClose, onUpdated }) {
 
     // Update customer info
     const res = await fetch(
-      `https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/customers/${customer.customer_id}`,
+      `https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/customer/${customer.customer_id}`,
       {
         method: "PUT",
         headers: {
@@ -30,10 +30,14 @@ function EditCustomerModal({ customer, onClose, onUpdated }) {
 
     const data = await res.json();
     if (!res.ok) {
+      setMessage("Customer updated successfully!");
+      onUpdated();
+      onClose();
+    }else{
       setMessage(data.message || "Error updating customer.");
       return;
     }
-
+  
     // Upload photo if selected
     if (photo) {
       const formData = new FormData();
@@ -65,7 +69,7 @@ function EditCustomerModal({ customer, onClose, onUpdated }) {
             <input
               type="text"
               className="w-full border p-2 rounded"
-              value={name}
+              value={name || ""}
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -75,7 +79,7 @@ function EditCustomerModal({ customer, onClose, onUpdated }) {
             <input
               type="email"
               className="w-full border p-2 rounded"
-              value={email}
+              value={email || ""}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -85,7 +89,7 @@ function EditCustomerModal({ customer, onClose, onUpdated }) {
             <input
               type="tel"
               className="w-full border p-2 rounded"
-              value={phone}
+              value={phone || ""}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
