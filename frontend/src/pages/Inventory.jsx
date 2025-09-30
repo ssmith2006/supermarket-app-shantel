@@ -7,7 +7,7 @@ import LowStockCard from "../components/LowStockCard";
 function Inventory() {
   const [products, setProducts] = useState([]);
   const [topProducts, setTopProducts] = useState([]);
-  const [lowStock, setLowStock] = useState([])
+  const [lowStock, setLowStock] = useState([]);
   const token = localStorage.getItem("token");
 
   // TEMP: don't block rendering while building
@@ -16,6 +16,7 @@ function Inventory() {
   }
 
   const fetchInventory = async () => {
+    console.log("Fetching Inventory...")
     if (!token) return;
     const res = await fetch(
       "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory",
@@ -26,8 +27,8 @@ function Inventory() {
       }
     );
     const data = await res.json();
-    // console.log(data)
-    setProducts(data);
+    console.log("Inventory fetched:", data);
+    setProducts(data[0]);
   };
   const fetchTopProducts = async () => {
     const res = await fetch(
@@ -42,17 +43,18 @@ function Inventory() {
     setTopProducts(data);
   };
 
-  const fetchLowStock =async () => {
-    const res = await fetch("https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory/low-stock/2",
+  const fetchLowStock = async () => {
+    const res = await fetch(
+      "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory/low-stock/5",
       {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       }
-    )
-    const data = await res.json()
-    setLowStock(data)
-  }
+    );
+    const data = await res.json();
+    setLowStock(data);
+  };
   useEffect(() => {
     fetchInventory();
     fetchTopProducts();
@@ -69,15 +71,16 @@ function Inventory() {
           </h2>
           <p className="text-green-600 text-2xl font-bold text-center">$100</p>
         </div>
-        <AddProductsForm />
-        <InventoryTable products={products} />
-        <div className="flex flex-wrap gap-4 mt-6">
-          <div className="flex- min-w-[300px]">
+        <AddProductsForm onAdded={fetchInventory} />
+        <InventoryTable products={products} onChanged={fetchInventory}/>
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <div className="flex-1 min-w-[100px]">
             <TopProductsCard products={topProducts} />
           </div>
-        </div>
-        <div className="flex-1 min-w-[300px]">
-          <LowStockCard products={lowStock} threshold={5} />
+
+          <div className="flex-1 min-w-[100px]">
+            <LowStockCard products={lowStock} threshold={5} />
+          </div>
         </div>
       </div>
     </div>
