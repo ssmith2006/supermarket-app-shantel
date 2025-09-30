@@ -1,20 +1,22 @@
 import { useState } from "react";
 
-function AddProductsForm() {
+function AddProductsForm({onAdded}) {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
+  const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(0);
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+console.log("Submitting product:", { name, price, stock });
     const token = localStorage.getItem("token");
-
+console.log("Token:", token);
     if (!token) {
       setMessage("You must be logged in to add a new product.");
       return;
     }
+    console.log({name, price, stock});
+
     const res = await fetch(
       "https://miniature-parakeet-4jw4wxj4x44g377rj-3000.app.github.dev/inventory",
       {
@@ -27,16 +29,22 @@ function AddProductsForm() {
         body: JSON.stringify({ name, price, stock }),
       }
     );
-
+console.log("Response status:", res.status);
     const data = await res.json();
+    console.log("Response data:", data);
     if (res.ok) {
       setMessage("Product added successfully!");
       setName("");
       setPrice(0);
       setStock(0);
+
+      if (onAdded) 
+        console.log("calling OnAdded -> fetch Inventory");
+      onAdded()
     } else {
       setMessage(data.message || "Error adding product.");
     }
+    
   };
 
   return (
